@@ -4,27 +4,8 @@ import java.util.HashMap;
 
 import algorithms.mazeGenerators.Maze3d;
 import controller.Command;
-import controller.Controller;
 
-public class MyView extends CommonView {
-	
-	private Controller controller;
-	
-	public MyView(Controller controller) {
-		this.controller = controller;
-	}
-	
-	public MyView() {
-		// TODO Auto-generated constructor stub
-	}
-	
-	public Controller getController() {
-		return controller;
-	}
-
-	public void setController(Controller controller) {
-		this.controller = controller;
-	}
+public class CommonView implements View {
 
 	@Override
 	public void notifyMazeIsReady(String name) {
@@ -44,5 +25,10 @@ public class MyView extends CommonView {
 
 	}
 
+	@Override
+	public void printAnswers(String[] args) {
+		// TODO Auto-generated method stub
+
+	}
 
 }

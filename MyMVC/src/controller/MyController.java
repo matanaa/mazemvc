@@ -3,11 +3,7 @@ package controller;
 import model.Model;
 import view.View;
 
-public class MyController implements Controller {
-
-	private View view;
-	private Model model;
-	private CommandsManager commandsManager;
+public class MyController extends CommonController {
 	
 	/**
 	 * Controller c'tor

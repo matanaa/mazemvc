@@ -56,14 +56,11 @@ public class CommandsManager {
 			String paths = args[0];
 			File folderPath = null;
 			String[] filelist;
-
 			try {
 				// create new file
 				folderPath = new File(paths);
-
 				// array of files and directory
 				filelist = folderPath.list();
-
 				// for each name in the path array
 				view.printAnswers(filelist);
 			} catch (Exception e) {
