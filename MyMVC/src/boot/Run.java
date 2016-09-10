@@ -1,25 +1,15 @@
 package boot;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
 
-import algorithms.demo.MazeAdapter;
-import algorithms.mazeGenerators.CommonMaze3dGenerator;
-import algorithms.mazeGenerators.Maze3d;
-import algorithms.mazeGenerators.Position;
-import algorithms.mazeGenerators.SimpleMaze3dGenerator;
-import algorithms.search.BFS;
-import algorithms.search.DFS;
-import algorithms.search.Solution;
-import io.MyCompressorOutputStream;
-import io.MyDecompressorInputStream;
+import controller.Command;
+import controller.CommandsManager;
+import model.MyModel;
+import view.MyView;
 
 public class Run {
 
 	public static void main(String[] args) throws IOException {
-		CommonMaze3dGenerator mg =new SimpleMaze3dGenerator();
+/*		CommonMaze3dGenerator mg =new SimpleMaze3dGenerator();
 		Maze3d maze = mg.generate(4, 4, 4);
 		maze.printMaze();
 		
@@ -45,8 +35,14 @@ public class Run {
 		in.read(b);
 		in.close();
 		Maze3d loaded=new Maze3d(b);
-		System.out.println(loaded.equals(maze));
+		System.out.println(loaded.equals(maze));*/
+		
+		CommandsManager a = new CommandsManager(new MyModel(), new MyView());
+Command dir = a.getCommandsMap().get("dir");
+String[] str= new String[1];
+str[0]="c:\\";
 
+dir.doCommand(str);
 	}
 
 }

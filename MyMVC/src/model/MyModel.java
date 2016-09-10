@@ -1,6 +1,7 @@
 package model;
 
 import algorithms.mazeGenerators.Maze3d;
+import controller.Controller;
 
 public class MyModel implements Model {
 	
@@ -8,6 +9,10 @@ public class MyModel implements Model {
 	
 	public MyModel(Controller controller) {
 		this.controller = controller;
+	}
+
+	public MyModel() {
+		// TODO Auto-generated constructor stub
 	}
 
 	@Override

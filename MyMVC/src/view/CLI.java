@@ -28,7 +28,7 @@ public class CLI {
 				try{
 					Command c = null;
 					String buffer = in.readLine();
-					while (!buffer.equals("end")) {
+					while (!buffer.equals("exit")) {
 						c = CommandMap.get(buffer.split(" ")[0]);
 						if (c != null) {
 							if (buffer.split(" ").length < 1) {
@@ -43,11 +43,21 @@ public class CLI {
 						}
 						buffer = in.readLine();
 					}
-					CommandMap.get("end").doCommand("");
+					CommandMap.get("exit").doCommand("");
 				} catch (IOException e) {
 					e.printStackTrace();
 				}	
 			}
 		}).start();
+	}
+	
+	void printAnswers (String[] args){
+		for (String line : args) {
+			// prints filename and directory name
+			out.println(line);
+			out.flush();
+		}
+		
+		
 	}
 }
