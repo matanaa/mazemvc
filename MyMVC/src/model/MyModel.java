@@ -1,32 +1,30 @@
 package model;
 
+import algorithms.mazeGenerators.GrowingTreeMaze3dGenerator;
 import algorithms.mazeGenerators.Maze3d;
-import algorithms.mazeGenerators.SimpleMaze3dGenerator;
-import controller.Controller;
 
 public class MyModel extends CommonModel {
 
-	private Controller controller;
 
-	public MyModel(Controller controller) {
-		this.controller = controller;
-	}
 
 	public MyModel() {
-		// TODO Auto-generated constructor stub
+		super();
 	}
 
 	@Override
-	public void generateMaze(String name, int floors, int rows, int colums) {
-		threadPool.execute(new Runnable() {
+	public void generateMaze(String name, int floors, int rows, int cols) {
+		Thread thread = new Thread(new Runnable() {
 			@Override
 			public void run() {
-				Maze3d maze = new SimpleMaze3dGenerator().generate(floors,rows,colums);
+				GrowingTreeMaze3dGenerator generator = new GrowingTreeMaze3dGenerator();
+				Maze3d maze = generator.generate(floors, rows, cols);
 				mazeMap.put(name, maze);
-				controller.display("The " + name + " maze is ready.");
+
+				controller.notifyMazeIsReady(name);
 			}
 		});
-
+		thread.start();
+		threadPool.submit(thread);
 	}
 
 	@Override

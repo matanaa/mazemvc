@@ -5,29 +5,18 @@ import java.util.HashMap;
 import algorithms.mazeGenerators.Maze3d;
 import controller.Command;
 
-public class CommonView implements View {
+public class abstract CommonView implements View {
 
-	@Override
+	void printAnswers (String[] args){
+		for (String line : args) {
+			// prints filename and directory name
+			out.println(line);
+			out.flush();
+		}
+	}
+	
 	public void notifyMazeIsReady(String name) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void displayMaze(Maze3d maze) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void setCommands(HashMap<String, Command> commands) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void printAnswers(String[] args) {
-		// TODO Auto-generated method stub
+		out.println("The Maze" + name+" is ready");
 
 	}
 

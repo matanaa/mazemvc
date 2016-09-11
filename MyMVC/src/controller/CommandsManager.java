@@ -27,7 +27,6 @@ public class CommandsManager {
 	}
 
 	public class GenerateMazeCommand implements Command {
-
 		@Override
 		public void doCommand(String[] args) {
 			String name = args[0];
@@ -39,7 +38,6 @@ public class CommandsManager {
 	}
 
 	public class DisplayMazeCommand implements Command {
-
 		@Override
 		public void doCommand(String[] args) {
 			String name = args[0];
@@ -50,7 +48,6 @@ public class CommandsManager {
 	}
 
 	public class Dir implements Command {
-
 		@Override
 		public void doCommand(String[] args) {
 			String paths = args[0];
@@ -68,6 +65,43 @@ public class CommandsManager {
 				e.printStackTrace();
 			}
 
+		}
+
+	}
+	
+	public class Display_cross_section implements Command {
+		@Override
+		public void doCommand(String[] args) {
+			String index = args[0];
+			String cross = args[1].toLowerCase();
+			String name = args[2];
+			Maze3d maze = model.getMaze(name);
+			switch (cross) {
+			case "z":
+				view.displayMaze(maze.getCrossSectionByZ(Integer.parseInt(index)));
+				break;
+			case "y":
+				view.displayMaze(maze.getCrossSectionByY(Integer.parseInt(index)));
+				break;
+			case "x":
+				view.displayMaze(maze.getCrossSectionByX(Integer.parseInt(index)));
+				break;
+			default:
+				break;
+			}
+			
+		}
+
+	}
+	
+
+	public class save_maze implements Command {
+		@Override
+		public void doCommand(String[] args) {
+			String name = args[0];
+			String file_path = args[1];
+			//TODO continue
+			
 		}
 
 	}

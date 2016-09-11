@@ -9,7 +9,7 @@ import javax.activation.CommandMap;
 
 import controller.Command;
 
-public class CLI {
+public class CLI extends CommonView {
 	private BufferedReader in;
 	private PrintWriter out;
 	private HashMap<String, Command> commands;
@@ -51,13 +51,6 @@ public class CLI {
 		}).start();
 	}
 	
-	void printAnswers (String[] args){
-		for (String line : args) {
-			// prints filename and directory name
-			out.println(line);
-			out.flush();
-		}
-		
-		
-	}
+
+
 }

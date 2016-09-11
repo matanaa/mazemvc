@@ -1,5 +1,5 @@
 package controller;
 
 public interface Command {
-	void doCommand(String[] commands);
+	void doCommand(String[] command);
 }
