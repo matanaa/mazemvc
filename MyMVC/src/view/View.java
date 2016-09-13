@@ -17,6 +17,10 @@ public interface View {
 
 	void setController(Controller controller);
 
+	void printAnswers(String[] filelist);
+
+	void printCross(int[][] cross);
+
 
 	
 	

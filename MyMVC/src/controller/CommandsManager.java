@@ -1,5 +1,6 @@
 package controller;
 
+import java.io.File;
 import java.util.HashMap;
 
 import algorithms.mazeGenerators.Maze3d;
@@ -20,8 +21,8 @@ public class CommandsManager {
 		HashMap<String, Command> commands = new HashMap<String, Command>();
 		commands.put("generate_maze", new GenerateMazeCommand());
 		commands.put("display", new DisplayMazeCommand());
-	//	commands.put("exit", null);
-	//	commands.put("dir", new Dir());
+		commands.put("dir", new Dir());
+		commands.put("display_cross", new Display_Cross_Section());
 
 		return commands;
 	}
@@ -47,7 +48,7 @@ public class CommandsManager {
 
 	}
 
-	/*	public class Dir implements Command {
+		public class Dir implements Command {
 		@Override
 		public void doCommand(String[] args) {
 			String paths = args[0];
@@ -69,7 +70,7 @@ public class CommandsManager {
 
 	}
 	
-	public class Display_cross_section implements Command {
+		public class Display_Cross_Section implements Command {
 		@Override
 		public void doCommand(String[] args) {
 			String index = args[0];
@@ -78,13 +79,13 @@ public class CommandsManager {
 			Maze3d maze = model.getMaze(name);
 			switch (cross) {
 			case "z":
-				view.displayMaze(maze.getCrossSectionByZ(Integer.parseInt(index)));
+				view.printCross(maze.getCrossSectionByZ(Integer.parseInt(index)));
 				break;
 			case "y":
-				view.displayMaze(maze.getCrossSectionByY(Integer.parseInt(index)));
+				view.printCross(maze.getCrossSectionByY(Integer.parseInt(index)));
 				break;
 			case "x":
-				view.displayMaze(maze.getCrossSectionByX(Integer.parseInt(index)));
+				view.printCross(maze.getCrossSectionByX(Integer.parseInt(index)));
 				break;
 			default:
 				break;
@@ -95,7 +96,7 @@ public class CommandsManager {
 	}
 	
 
-	public class save_maze implements Command {
+		/*	public class save_maze implements Command {
 		@Override
 		public void doCommand(String[] args) {
 			String name = args[0];

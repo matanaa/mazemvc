@@ -25,7 +25,8 @@ public class MyView extends CommonView {
 		out.flush();
 
 	}
-	
+
+	@Override
 	public void printAnswers(String[] args) {
 		for (String line : args) {
 			out.println(line);
@@ -42,7 +43,18 @@ public class MyView extends CommonView {
 	@Override
 	public void start() {
 		cli.start();
-		
+
+	}
+
+	@Override
+	public void printCross(int[][] cross) {
+		for (int[] i : cross) {
+			for (int j : i) {
+				out.print(j + " ");
+			}
+			out.println("");
+		}
+		out.println("");
 	}
 
 }
