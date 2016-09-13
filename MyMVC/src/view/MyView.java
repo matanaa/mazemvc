@@ -1,48 +1,48 @@
 package view;
 
+import java.io.BufferedReader;
+import java.io.PrintWriter;
 import java.util.HashMap;
 
 import algorithms.mazeGenerators.Maze3d;
 import controller.Command;
-import controller.Controller;
 
 public class MyView extends CommonView {
-	
-	private Controller controller;
-	
-	public MyView(Controller controller) {
-		this.controller = controller;
-	}
-	
-	public MyView() {
-		// TODO Auto-generated constructor stub
-	}
-	
-	public Controller getController() {
-		return controller;
-	}
 
-	public void setController(Controller controller) {
-		this.controller = controller;
+	public MyView(BufferedReader in, PrintWriter out) {
+		super(in, out);
 	}
 
 	@Override
 	public void notifyMazeIsReady(String name) {
-		// TODO Auto-generated method stub
-
+		out.println("The Maze" + name + " is ready");
+		out.flush();
 	}
 
 	@Override
 	public void displayMaze(Maze3d maze) {
-		// TODO Auto-generated method stub
+		out.println(maze);
+		out.flush();
 
+	}
+	
+	public void printAnswers(String[] args) {
+		for (String line : args) {
+			out.println(line);
+			out.flush();
+		}
 	}
 
 	@Override
 	public void setCommands(HashMap<String, Command> commands) {
-		// TODO Auto-generated method stub
+		cli.setCommands(commands);
 
 	}
 
+	@Override
+	public void start() {
+		cli.start();
+		
+	}
 
 }

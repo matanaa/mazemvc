@@ -5,9 +5,9 @@ import view.View;
 
 public abstract class CommonController implements Controller {
 	
-	private Model model;
-	private View view;
-	private CommandsManager commandsManager;
+	protected Model model;
+	protected View view;
+	protected CommandsManager commandsManager;
 	
 	public CommonController(View view, Model model) {
 		this.view = view;

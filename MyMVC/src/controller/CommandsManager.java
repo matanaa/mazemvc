@@ -1,6 +1,5 @@
 package controller;
 
-import java.io.File;
 import java.util.HashMap;
 
 import algorithms.mazeGenerators.Maze3d;
@@ -21,7 +20,8 @@ public class CommandsManager {
 		HashMap<String, Command> commands = new HashMap<String, Command>();
 		commands.put("generate_maze", new GenerateMazeCommand());
 		commands.put("display", new DisplayMazeCommand());
-		commands.put("dir", new Dir());
+	//	commands.put("exit", null);
+	//	commands.put("dir", new Dir());
 
 		return commands;
 	}
@@ -30,9 +30,9 @@ public class CommandsManager {
 		@Override
 		public void doCommand(String[] args) {
 			String name = args[0];
-			int rows = Integer.parseInt(args[1]);
-			int cols = Integer.parseInt(args[2]);
-			int floors = Integer.parseInt(args[3]);
+			int floors = Integer.parseInt(args[1]);
+			int rows = Integer.parseInt(args[2]);
+			int cols = Integer.parseInt(args[3]);
 			model.generateMaze(name, floors, rows, cols);
 		}
 	}
@@ -47,7 +47,7 @@ public class CommandsManager {
 
 	}
 
-	public class Dir implements Command {
+	/*	public class Dir implements Command {
 		@Override
 		public void doCommand(String[] args) {
 			String paths = args[0];
@@ -104,6 +104,6 @@ public class CommandsManager {
 			
 		}
 
-	}
+	}*/
 
 }
