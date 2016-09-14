@@ -22,10 +22,13 @@ public class CLI {
 	}
 
 	private void printMenu() {
-		out.println("Choose Command:");
+		out.println("Please choose Command to run:");
+		Integer i=1;
 		for (String command : commands.keySet()) {
-			out.println(command + ",");
+			out.println("\t"+i.toString()+")"+ command);
+			i++;
 		}
+		out.println("\n\texample: dir c:\\" );
 		out.flush();
 	}
 
@@ -50,12 +53,16 @@ public class CLI {
 								args = commandArgs.split(" ");
 							}
 							Command cmd = commands.get(command);
-							cmd.doCommand(args);
+							try {
+								cmd.doCommand(args);
+								
+							} catch (NullPointerException e) {
+								out.println("Arguments Error: No arguments");
+
+							}
+							
 						}
-						if (command.equals("exit")) {
-							out.println("Well. I'll just sit here in the dark... bye...");
-							break;
-						}
+
 					} catch (IOException e) {
 						e.printStackTrace();
 					}

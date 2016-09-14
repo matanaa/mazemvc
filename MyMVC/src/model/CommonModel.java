@@ -59,5 +59,8 @@ public abstract class CommonModel implements Model {
 
 	@Override
 	public abstract Maze3d getMaze(String name);
+	
+	@Override
+	public abstract Solution<Position> getMazeSolution(String name);
 
 }

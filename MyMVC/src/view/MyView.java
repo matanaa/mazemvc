@@ -5,6 +5,8 @@ import java.io.PrintWriter;
 import java.util.HashMap;
 
 import algorithms.mazeGenerators.Maze3d;
+import algorithms.mazeGenerators.Position;
+import algorithms.search.Solution;
 import controller.Command;
 
 public class MyView extends CommonView {
@@ -61,6 +63,20 @@ public class MyView extends CommonView {
 	public void notifySolutionIsReady(String name) {
 		out.println("The Solution for Maze" + name + " is ready");
 		out.flush();
+		
+	}
+
+	@Override
+	public void displayMazeSolution(Solution<Position> solution) {
+		out.println(solution);
+		
+	}
+
+	@Override
+	public void printErrorMessage(String[] msg) {
+		for(String line : msg){
+			out.println(line);
+		}
 		
 	}
 

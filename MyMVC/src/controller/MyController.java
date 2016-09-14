@@ -23,4 +23,10 @@ public class MyController extends CommonController {
 		
 	}
 
+	@Override
+	public void printErrorMessage(String[] msg) {
+		view.printErrorMessage(msg);
+	}
+	
+
 }
