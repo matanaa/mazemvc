@@ -29,7 +29,7 @@ public class CommandsManager {
 		commands.put("dir", new Dir());
 		commands.put("display_cross", new Display_Cross_Section());
 		commands.put("save_maze", new save_maze());
-
+		commands.put("load_maze", new load_maze());
 		return commands;
 	}
 
