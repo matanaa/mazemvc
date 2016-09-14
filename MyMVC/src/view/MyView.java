@@ -56,7 +56,7 @@ public class MyView extends CommonView {
 			}
 			out.println("");
 		}
-		out.println("");
+		out.println(""); 
 	}
 
 	@Override
