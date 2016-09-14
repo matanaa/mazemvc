@@ -1,12 +1,16 @@
 package model;
 
 
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
 import algorithms.mazeGenerators.CommonMaze3dGenerator;
 import algorithms.mazeGenerators.GrowingTreeMaze3dGenerator;
 import algorithms.mazeGenerators.Maze3d;
+import io.MyDecompressorInputStream;
 
 public class MyModel extends CommonModel {
 
@@ -62,6 +66,16 @@ public class MyModel extends CommonModel {
 		for (generateMazeRunnable task : generateMazeTasks){
 			task.terminate();
 		}
+	}
+
+	@Override
+	public void loadMaze(String file_name, String name) throws IOException {
+		InputStream in = new MyDecompressorInputStream(new FileInputStream(file_name+".maz"));
+		byte b[] = new byte[50*50*50];
+		in.read(b);
+		in.close();
+		Maze3d loaded = new Maze3d(b);
+		mazeMap.put(name, loaded);		
 	}
 
 

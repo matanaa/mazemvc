@@ -1,9 +1,14 @@
 package controller;
 
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStream;
 import java.util.HashMap;
 
 import algorithms.mazeGenerators.Maze3d;
+import io.MyCompressorOutputStream;
 import model.Model;
 import view.View;
 
@@ -23,6 +28,7 @@ public class CommandsManager {
 		commands.put("display", new DisplayMazeCommand());
 		commands.put("dir", new Dir());
 		commands.put("display_cross", new Display_Cross_Section());
+		commands.put("save_maze", new save_maze());
 
 		return commands;
 	}
@@ -48,7 +54,7 @@ public class CommandsManager {
 
 	}
 
-		public class Dir implements Command {
+	public class Dir implements Command {
 		@Override
 		public void doCommand(String[] args) {
 			String paths = args[0];
@@ -69,8 +75,8 @@ public class CommandsManager {
 		}
 
 	}
-	
-		public class Display_Cross_Section implements Command {
+
+	public class Display_Cross_Section implements Command {
 		@Override
 		public void doCommand(String[] args) {
 			String index = args[0];
@@ -90,21 +96,31 @@ public class CommandsManager {
 			default:
 				break;
 			}
-			
+
 		}
 
 	}
-	
 
-		/*	public class save_maze implements Command {
+	public class save_maze implements Command {
 		@Override
-		public void doCommand(String[] args) {
+		public void doCommand(String[] args) throws IOException {
 			String name = args[0];
-			String file_path = args[1];
-			//TODO continue
-			
+			String file_name = args[1];
+			Maze3d maze = model.getMaze(name);
+			OutputStream out = new MyCompressorOutputStream(new FileOutputStream(file_name + ".maz"));
+			out.write(maze.toByteArray());
+			out.flush();
+			out.close();
 		}
 
-	}*/
+	}
+
+	public class load_maze implements Command {
+		@Override
+		public void doCommand(String[] args) throws FileNotFoundException, IOException {
+			model.loadMaze(args[0], args[1]);
+		}
+
+	}
 
 }
