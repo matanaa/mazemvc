@@ -21,6 +21,8 @@ public interface View {
 
 	void printCross(int[][] cross);
 
+	void notifySolutionIsReady(String name);
+
 
 	
 	

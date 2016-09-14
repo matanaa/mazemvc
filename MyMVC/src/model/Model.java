@@ -4,6 +4,8 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 
 import algorithms.mazeGenerators.Maze3d;
+import algorithms.mazeGenerators.Position;
+import algorithms.search.CommonSearcher;
 import controller.Controller;
 
 public interface Model {
@@ -12,5 +14,6 @@ public interface Model {
 	void exit();
 	void setController(Controller controller);
 	void loadMaze(String file_name, String name) throws FileNotFoundException, IOException;
+	void solveMaze3d(String name, CommonSearcher<Position> commonSearcher);
 	
 }

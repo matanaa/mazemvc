@@ -8,6 +8,11 @@ import java.io.OutputStream;
 import java.util.HashMap;
 
 import algorithms.mazeGenerators.Maze3d;
+import algorithms.mazeGenerators.Position;
+import algorithms.search.BFS;
+import algorithms.search.CommonSearcher;
+import algorithms.search.DFS;
+import algorithms.search.Solution;
 import io.MyCompressorOutputStream;
 import model.Model;
 import view.View;
@@ -30,7 +35,9 @@ public class CommandsManager {
 		commands.put("display_cross", new Display_Cross_Section());
 		commands.put("save_maze", new save_maze());
 		commands.put("load_maze", new load_maze());
-
+		commands.put("solve",new solveMaze3d());
+		commands.put("display_solution",new displayMazeSolution());
+		commands.put("exit", new exit());
 		return commands;
 	}
 
@@ -122,6 +129,44 @@ public class CommandsManager {
 			model.loadMaze(args[0], args[1]);
 		}
 
+	}
+	
+	public class solveMaze3d implements Command{
+
+		@Override
+		public void doCommand(String[] args) {
+			String name=args[0];
+			String algorithm=args[1];
+			model.solveMaze3d(name,getCommandsMap(algorithm));		
+		}
+		
+		public CommonSearcher<Position> getCommandsMap(String algName) {
+			HashMap<String,  CommonSearcher<Position>> commands = new HashMap<String,  CommonSearcher<Position>>();
+			commands.put("bfs", new BFS<Position>());
+			commands.put("dfs", new DFS<Position>());
+			return commands.get(algName);
+		}
+		
+	}
+	
+	public class displayMazeSolution implements Command{
+
+		@Override
+		public void doCommand(String[] args) {
+			String name=args[0];
+			//Solution<Position> solution=model.getMazeSolution(name);
+			//view.displayMazeSolution(solution);
+		}
+		
+	} 
+	
+	public class exit implements Command{
+
+		@Override
+		public void doCommand(String[] args) {
+			
+		}
+		
 	}
 
 }

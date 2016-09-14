@@ -17,4 +17,10 @@ public class MyController extends CommonController {
 		view.notifyMazeIsReady(name);
 	}
 
+	@Override
+	public void notifySolutionIsReady(String name) {
+		view.notifySolutionIsReady(name);
+		
+	}
+
 }
