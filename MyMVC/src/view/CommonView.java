@@ -36,4 +36,5 @@ public abstract class CommonView implements View {
 	@Override
 	public abstract void setCommands(HashMap<String, Command> commands);
 
+	
 }
