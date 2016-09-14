@@ -2,6 +2,7 @@ package model;
 
 
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
@@ -69,13 +70,28 @@ public class MyModel extends CommonModel {
 	}
 
 	@Override
-	public void loadMaze(String file_name, String name) throws IOException {
-		InputStream in = new MyDecompressorInputStream(new FileInputStream(file_name+".maz"));
-		byte b[] = new byte[50*50*50];
-		in.read(b);
-		in.close();
-		Maze3d loaded = new Maze3d(b);
-		mazeMap.put(name, loaded);		
+	public void loadMaze(String file, String name) throws IOException {
+		try {
+			InputStream in = new FileInputStream(file);
+			MyDecompressorInputStream input = new MyDecompressorInputStream(in);
+			byte[] arr =new byte [(int)file.length()];
+			try {
+				input.read(arr);
+				Maze3d maze = new Maze3d(arr);
+				mazeMap.put(name, maze);
+				input.close();
+				
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+			
+			
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 
