@@ -155,6 +155,7 @@ public class MyModel extends CommonModel {
 			in.close();
 			Maze3d loaded = new Maze3d(b);
 			mazeMap.put(name, loaded);
+			controller.notifyMazeIsReady(name);
 		} catch (FileNotFoundException e) {
 			controller.printErrorMessage(new String[] { "File location Error", "can't find the file" });
 
@@ -189,7 +190,7 @@ public class MyModel extends CommonModel {
 			}
 
 		});
-		thread.start();
+		//thread.start();
 		threadPool.submit(thread);
 
 	}
@@ -223,6 +224,10 @@ public class MyModel extends CommonModel {
 	@Override
 	public void save_maze(String name, String file_name) {
 		Maze3d maze = getMaze(name); //get the maze by name
+		if (maze==null){
+			controller.printErrorMessage(new String[] { "maze name errorr", "can't find the maze "+name });
+			return;
+		}
 		OutputStream savedFile;
 		openFileCount++; // will add notification that one file is opend
 		try {
@@ -233,7 +238,7 @@ public class MyModel extends CommonModel {
 			savedFile.flush();
 			savedFile.close();
 		} catch (IOException e) {
-			controller.printErrorMessage(new String[] { "File location Error", "can't save in thst psth" });
+			controller.printErrorMessage(new String[] { "File location Error", "can't save in that path" });
 		} finally {
 			openFileCount--; // notify that one file is closed
 		}

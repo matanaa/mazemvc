@@ -59,7 +59,7 @@ public class CLI {
 			i++;
 		}
 		// example command
-		out.println("\n\texample: generate_maze newmaze 5 5 5 Growing");
+		out.println("\n\texample: generate_maze newmaze 5 5 5 Growing\n");
 		out.flush();
 	}
 
@@ -80,7 +80,7 @@ public class CLI {
 						// split the input to array of single words
 						String commandsArray[] = commandLine.split(" ");
 						// recognizes only the first word as the command itself
-						String command = commandsArray[0];
+						String command = commandsArray[0].toLowerCase();
 
 						// throws error if the command isn't part of the
 						// commands list

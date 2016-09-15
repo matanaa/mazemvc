@@ -105,7 +105,7 @@ public class MyView extends CommonView {
 	 */
 	@Override
 	public void notifySolutionIsReady(String name) {
-		out.println("The Solution for Maze" + name + " is ready");
+		out.println("The Solution for Maze " + name + " is ready");
 		out.flush();
 	}
 
