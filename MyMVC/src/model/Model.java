@@ -5,7 +5,6 @@ import java.io.IOException;
 
 import algorithms.mazeGenerators.CommonMaze3dGenerator;
 import algorithms.mazeGenerators.Maze3d;
-import algorithms.mazeGenerators.Maze3dGenerator;
 import algorithms.mazeGenerators.Position;
 import algorithms.search.CommonSearcher;
 import algorithms.search.Solution;
@@ -28,7 +27,7 @@ public interface Model {
 	 *            the rows
 	 * @param colums
 	 *            the colums
-	 * @param maze3dGenerator 
+	 * @param maze3dGenerator
 	 */
 	void generateMaze(String name, int floors, int rows, int colums, CommonMaze3dGenerator generator);
 
@@ -104,9 +103,9 @@ public interface Model {
 
 	/**
 	 * Wait until close all files.
+	 * 
+	 * @throws InterruptedException
 	 */
-	void waitUntilCloseAllFiles();
-
-	
+	void waitUntilCloseAllFiles() throws InterruptedException;
 
 }

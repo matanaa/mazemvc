@@ -30,7 +30,7 @@ public class MyModel extends CommonModel {
 	protected List<generateMazeRunnable> generateMazeTasks = new ArrayList<generateMazeRunnable>();
 
 	/** The open file count. */
-	// will save how many files are open new
+	// will count how many files are open
 	protected int openFileCount = 0;
 
 	/**
@@ -42,7 +42,7 @@ public class MyModel extends CommonModel {
 
 	/**
 	 * The Class generateMazeRunnable - an adapter to make the generation
-	 * process runnable on threads
+	 * process runnable on threads.
 	 */
 	class generateMazeRunnable implements Runnable {
 
@@ -66,6 +66,8 @@ public class MyModel extends CommonModel {
 		 *            the colums
 		 * @param name
 		 *            the name
+		 * @param generator
+		 *            the generator
 		 */
 		public generateMazeRunnable(int floors, int rows, int colums, String name, Maze3dGenerator generator) {
 			super();
@@ -141,9 +143,12 @@ public class MyModel extends CommonModel {
 	@Override
 	public void loadMaze(String file, String name) {
 		InputStream in;
+		// use to check how many files are open for a proper exit
 		openFileCount++;
 		try {
+			// using decorator pattern to get a file using our decompressor
 			in = new MyDecompressorInputStream(new FileInputStream(file + ".maz"));
+			// creates a max size byte array
 			byte b[] = new byte[50 * 50 * 50]; // TODO fix this line
 			in.read(b);
 			in.close();
@@ -156,6 +161,7 @@ public class MyModel extends CommonModel {
 			controller.printErrorMessage(new String[] { "Errorr", "can't Load the maze" });
 
 		} finally {
+			// use to check how many files are open for a proper exit
 			openFileCount--;
 		}
 
@@ -169,16 +175,13 @@ public class MyModel extends CommonModel {
 	 */
 	@Override
 	public void solveMaze3d(String name, CommonSearcher<Position> searcher) {
-		if (searcher == null) {
-			// TODO add error
-		}
 		Thread thread = new Thread(new Runnable() {
 
 			@Override
 			public void run() {
 
 				Maze3d maze = mazeMap.get(name);
-				Searchable searchableMaze = new MazeAdapter(maze);
+				Searchable<Position> searchableMaze = new MazeAdapter(maze);
 				Solution<Position> solution = searcher.search(searchableMaze);
 				solutionMap.put(name, solution);
 				controller.notifySolutionIsReady(name);
@@ -240,14 +243,9 @@ public class MyModel extends CommonModel {
 	 * 
 	 * @see model.Model#waitUntilCloseAllFiles()
 	 */
-	public void waitUntilCloseAllFiles() {
+	public void waitUntilCloseAllFiles() throws InterruptedException {
 		while (openFileCount != 0) {
-			try {
-				Thread.sleep(1);
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+			Thread.sleep(1);
 		}
 	}
 }

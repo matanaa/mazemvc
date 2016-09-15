@@ -8,7 +8,6 @@ import java.util.HashMap;
 import algorithms.mazeGenerators.CommonMaze3dGenerator;
 import algorithms.mazeGenerators.GrowingTreeMaze3dGenerator;
 import algorithms.mazeGenerators.Maze3d;
-import algorithms.mazeGenerators.Maze3dGenerator;
 import algorithms.mazeGenerators.Position;
 import algorithms.mazeGenerators.SimpleMaze3dGenerator;
 import algorithms.search.BFS;
@@ -348,7 +347,11 @@ public class CommandsManager {
 			// finishing all threads in the model
 			model.finishThreads();
 			// closing all files in the model
-			model.waitUntilCloseAllFiles();
+			try {
+				model.waitUntilCloseAllFiles();
+			} catch (InterruptedException e) {
+				view.printErrorMessage(new String[] { "File Error", "Error with closing all files" });
+			}
 			// This just terminates the program.
 			System.exit(0);
 		}
