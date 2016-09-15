@@ -50,7 +50,7 @@ public class CLI {
 	 * Prints the menu.
 	 */
 	private void printMenu() {
-		out.println("==============================================");
+		out.println("\n\n==============================================");
 		out.println("Please choose Command to run:");
 		// the menu
 		Integer i = 1;

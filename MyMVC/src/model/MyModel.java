@@ -109,8 +109,6 @@ public class MyModel extends CommonModel {
 	public void generateMaze(String name, int floors, int rows, int cols, CommonMaze3dGenerator generator) {
 		generateMazeRunnable generateMaze = new generateMazeRunnable(floors, rows, cols, name, generator);
 		generateMazeTasks.add(generateMaze);
-		Thread thread = new Thread(generateMaze);
-		thread.start();
 		threadPool.submit(generateMaze);
 	}
 

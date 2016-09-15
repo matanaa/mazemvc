@@ -79,7 +79,7 @@ public class CommandsManager {
 			// will send error if not enough args has been sent
 			if (args.length != 5) {
 				view.printErrorMessage(new String[] { "Arguments Error",
-						"Please enter <maze name> <floors> <rows> <cols> and generator" });
+						"Please enter <maze name> <floors> <rows> <cols> <generator>" });
 				return;
 			}
 			// parsing the args
@@ -89,6 +89,7 @@ public class CommandsManager {
 			int cols = Integer.parseInt(args[3]);
 			String generator = args[4];
 			// ask the model to generate the maze
+			
 			model.generateMaze(name, floors, rows, cols, getGenerator(generator));
 		}
 
