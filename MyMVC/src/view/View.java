@@ -23,7 +23,7 @@ public interface View {
 	void notifyMazeIsReady(String name);
 
 	/**
-	 * Display maze.
+	 * Display maze- will print the maze.
 	 *
 	 * @param maze
 	 *            the maze
@@ -31,7 +31,7 @@ public interface View {
 	void displayMaze(Maze3d maze);
 
 	/**
-	 * Sets the commands.
+	 * Sets the commands for do some stuff.
 	 *
 	 * @param commands
 	 *            the commands
@@ -52,7 +52,7 @@ public interface View {
 	void setController(Controller controller);
 
 	/**
-	 * Prints the answers.
+	 * Prints the answers form commans.
 	 *
 	 * @param filelist
 	 *            the filelist
@@ -60,7 +60,7 @@ public interface View {
 	void printAnswers(String[] filelist);
 
 	/**
-	 * Prints the cross.
+	 * Prints the cross will print one cross from maze.
 	 *
 	 * @param cross
 	 *            the cross
@@ -84,7 +84,7 @@ public interface View {
 	void displayMazeSolution(Solution<Position> solution);
 
 	/**
-	 * Prints the error message.
+	 * will Prints the error message if they occurs .
 	 *
 	 * @param msg
 	 *            the msg
