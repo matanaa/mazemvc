@@ -11,8 +11,8 @@ import java.util.List;
 
 import algorithm.demo.MazeAdapter;
 import algorithms.mazeGenerators.CommonMaze3dGenerator;
-import algorithms.mazeGenerators.GrowingTreeMaze3dGenerator;
 import algorithms.mazeGenerators.Maze3d;
+import algorithms.mazeGenerators.Maze3dGenerator;
 import algorithms.mazeGenerators.Position;
 import algorithms.search.CommonSearcher;
 import algorithms.search.Searchable;
@@ -20,56 +20,112 @@ import algorithms.search.Solution;
 import io.MyCompressorOutputStream;
 import io.MyDecompressorInputStream;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class MyModel.
+ */
 public class MyModel extends CommonModel {
 
+	/** The generate maze tasks. */
 	protected List<generateMazeRunnable> generateMazeTasks = new ArrayList<generateMazeRunnable>();
-	protected int openFileCount = 0;// willsave how many files are open new
 
+	/** The open file count. */
+	// will save how many files are open new
+	protected int openFileCount = 0;
+
+	/**
+	 * Instantiates a new my model.
+	 */
 	public MyModel() {
 		super();
 	}
 
+	/**
+	 * The Class generateMazeRunnable - an adapter to make the generation
+	 * process runnable on threads
+	 */
 	class generateMazeRunnable implements Runnable {
-		private int floors, rows, colums;
-		private String name;
-		private CommonMaze3dGenerator generator;
 
-		public generateMazeRunnable(int floors, int rows, int colums, String name) {
+		/** The colums. */
+		private int floors, rows, colums;
+
+		/** The name. */
+		private String name;
+
+		/** The generator. */
+		private Maze3dGenerator generator;
+
+		/**
+		 * Instantiates a new generate maze runnable.
+		 *
+		 * @param floors
+		 *            the floors
+		 * @param rows
+		 *            the rows
+		 * @param colums
+		 *            the colums
+		 * @param name
+		 *            the name
+		 */
+		public generateMazeRunnable(int floors, int rows, int colums, String name, Maze3dGenerator generator) {
 			super();
 			this.floors = floors;
 			this.rows = rows;
 			this.colums = colums;
 			this.name = name;
+			this.generator = generator;
 		}
 
+		/*
+		 * (non-Javadoc)
+		 * 
+		 * @see java.lang.Runnable#run()
+		 */
 		@Override
 		public void run() {
-			generator = new GrowingTreeMaze3dGenerator();
+			// choosing the generator type
 			Maze3d maze = generator.generate(floors, rows, colums);
 			mazeMap.put(name, maze);
 			controller.notifyMazeIsReady(name);
 		}
 
+		/**
+		 * Terminate.
+		 */
 		public void terminate() {
 			generator.setDone(true);
 		}
-
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see model.CommonModel#generateMaze(java.lang.String, int, int, int)
+	 */
 	@Override
-	public void generateMaze(String name, int floors, int rows, int cols) {
-		generateMazeRunnable generateMaze = new generateMazeRunnable(floors, rows, cols, name);
+	public void generateMaze(String name, int floors, int rows, int cols, CommonMaze3dGenerator generator) {
+		generateMazeRunnable generateMaze = new generateMazeRunnable(floors, rows, cols, name, generator);
 		generateMazeTasks.add(generateMaze);
 		Thread thread = new Thread(generateMaze);
 		thread.start();
 		threadPool.submit(generateMaze);
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see model.CommonModel#getMaze(java.lang.String)
+	 */
 	@Override
 	public Maze3d getMaze(String name) {
 		return mazeMap.get(name);
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see model.Model#exit()
+	 */
 	@Override
 	public void exit() {
 		for (generateMazeRunnable task : generateMazeTasks) {
@@ -77,6 +133,11 @@ public class MyModel extends CommonModel {
 		}
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see model.Model#loadMaze(java.lang.String, java.lang.String)
+	 */
 	@Override
 	public void loadMaze(String file, String name) {
 		InputStream in;
@@ -100,6 +161,12 @@ public class MyModel extends CommonModel {
 
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see model.Model#solveMaze3d(java.lang.String,
+	 * algorithms.search.CommonSearcher)
+	 */
 	@Override
 	public void solveMaze3d(String name, CommonSearcher<Position> searcher) {
 		if (searcher == null) {
@@ -123,17 +190,32 @@ public class MyModel extends CommonModel {
 
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see model.CommonModel#getMazeSolution(java.lang.String)
+	 */
 	@Override
 	public Solution<Position> getMazeSolution(String name) {
 		return solutionMap.get(name);
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see model.Model#finishThreads()
+	 */
 	@Override
 	public void finishThreads() {
 		threadPool.shutdown();
 
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see model.Model#save_maze(java.lang.String, java.lang.String)
+	 */
 	@Override
 	public void save_maze(String name, String file_name) {
 		Maze3d maze = getMaze(name);
@@ -153,6 +235,11 @@ public class MyModel extends CommonModel {
 
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see model.Model#waitUntilCloseAllFiles()
+	 */
 	public void waitUntilCloseAllFiles() {
 		while (openFileCount != 0) {
 			try {
@@ -163,5 +250,4 @@ public class MyModel extends CommonModel {
 			}
 		}
 	}
-
 }
