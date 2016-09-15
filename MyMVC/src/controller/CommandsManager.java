@@ -2,9 +2,7 @@ package controller;
 
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.OutputStream;
 import java.util.HashMap;
 
 import algorithms.mazeGenerators.Maze3d;
@@ -13,7 +11,6 @@ import algorithms.search.BFS;
 import algorithms.search.CommonSearcher;
 import algorithms.search.DFS;
 import algorithms.search.Solution;
-import io.MyCompressorOutputStream;
 import model.Model;
 import view.View;
 
@@ -35,8 +32,8 @@ public class CommandsManager {
 		commands.put("display_cross", new Display_Cross_Section());
 		commands.put("save_maze", new save_maze());
 		commands.put("load_maze", new load_maze());
-		commands.put("solve",new solveMaze3d());
-		commands.put("display_solution",new displayMazeSolution());
+		commands.put("solve", new solveMaze3d());
+		commands.put("display_solution", new displayMazeSolution());
 		commands.put("exit", new exit());
 		return commands;
 	}
@@ -44,8 +41,9 @@ public class CommandsManager {
 	public class GenerateMazeCommand implements Command {
 		@Override
 		public void doCommand(String[] args) {
-			if(args.length!=4){
-				view.printErrorMessage(new String[]{"Arguments Error","Please enter <maze name> <floors> <rows> <cols>"});
+			if (args.length != 4) {
+				view.printErrorMessage(
+						new String[] { "Arguments Error", "Please enter <maze name> <floors> <rows> <cols>" });
 				return;
 			}
 			String name = args[0];
@@ -59,8 +57,8 @@ public class CommandsManager {
 	public class DisplayMazeCommand implements Command {
 		@Override
 		public void doCommand(String[] args) {
-			if(args.length!=1){
-				view.printErrorMessage(new String[]{"Arguments Error","Please enter Maze name"});
+			if (args.length != 1) {
+				view.printErrorMessage(new String[] { "Arguments Error", "Please enter Maze name" });
 				return;
 			}
 			String name = args[0];
@@ -76,7 +74,7 @@ public class CommandsManager {
 			if(args.length!=1){
 				view.printErrorMessage(new String[]{"Arguments Error","Please enter Directory location"});
 				return;
-			}c
+			}
 			String paths = args[0];
 			File folderPath = null;
 			String[] filelist;
@@ -99,8 +97,8 @@ public class CommandsManager {
 	public class Display_Cross_Section implements Command {
 		@Override
 		public void doCommand(String[] args) {
-			if(args.length!=3){
-				view.printErrorMessage(new String[]{"Arguments Error","Please enter <index> <axis> <maze name>"});
+			if (args.length != 3) {
+				view.printErrorMessage(new String[] { "Arguments Error", "Please enter <index> <axis> <maze name>" });
 				return;
 			}
 			String index = args[0];
@@ -128,13 +126,13 @@ public class CommandsManager {
 	public class save_maze implements Command {
 		@Override
 		public void doCommand(String[] args) throws IOException {
-			if(args.length!=2){
-				view.printErrorMessage(new String[]{"Arguments Error","Please enter Filename and Filepath"});
+			if (args.length != 2) {
+				view.printErrorMessage(new String[] { "Arguments Error", "Please enter Filename and Filepath" });
 				return;
 			}
 			String name = args[0];
 			String file_name = args[1];
-			model.save_maze(name,file_name);
+			model.save_maze(name, file_name);
 		}
 
 	}
@@ -142,63 +140,64 @@ public class CommandsManager {
 	public class load_maze implements Command {
 		@Override
 		public void doCommand(String[] args) throws FileNotFoundException, IOException {
-			if(args.length!=2){
-				view.printErrorMessage(new String[]{"Arguments Error","Please enter maze file location and Maze name"});
+			if (args.length != 2) {
+				view.printErrorMessage(
+						new String[] { "Arguments Error", "Please enter maze file location and Maze name" });
 				return;
 			}
 			model.loadMaze(args[0], args[1]);
 		}
 
 	}
-	
-	public class solveMaze3d implements Command{
+
+	public class solveMaze3d implements Command {
 
 		@Override
 		public void doCommand(String[] args) {
-			if(args.length!=2){
-				view.printErrorMessage(new String[]{"Arguments Error","Please enter Maze name and Algoritem"});
+			if (args.length != 2) {
+				view.printErrorMessage(new String[] { "Arguments Error", "Please enter Maze name and Algoritem" });
 				return;
 			}
-			String name=args[0];
-			String algorithm=args[1];
-			model.solveMaze3d(name,getAlgorithm(algorithm));		
+			String name = args[0];
+			String algorithm = args[1];
+			model.solveMaze3d(name, getAlgorithm(algorithm));
 		}
-		
+
 		public CommonSearcher<Position> getAlgorithm(String algName) {
-			HashMap<String,  CommonSearcher<Position>> commands = new HashMap<String,  CommonSearcher<Position>>();
+			HashMap<String, CommonSearcher<Position>> commands = new HashMap<String, CommonSearcher<Position>>();
 			commands.put("bfs", new BFS<Position>());
 			commands.put("dfs", new DFS<Position>());
 			return commands.get(algName);
 		}
-		
+
 	}
-	
-	public class displayMazeSolution implements Command{
+
+	public class displayMazeSolution implements Command {
 
 		@Override
 		public void doCommand(String[] args) {
-			if(args.length!=1){
-				view.printErrorMessage(new String[]{"Arguments Error","Please enter Maze name"});
+			if (args.length != 1) {
+				view.printErrorMessage(new String[] { "Arguments Error", "Please enter Maze name" });
 				return;
 			}
-			String name=args[0];
-			
-			Solution<Position> solution=model.getMazeSolution(name);
+			String name = args[0];
+
+			Solution<Position> solution = model.getMazeSolution(name);
 			view.displayMazeSolution(solution);
 		}
-		
-	} 
-	
-	public class exit implements Command{
+
+	}
+
+	public class exit implements Command {
 
 		@Override
 		public void doCommand(String[] args) {
 			model.finishThreads();
 			model.waitUntilCloseAllFiles();
-			//This just terminates the program.
+			// This just terminates the program.
 			System.exit(0);
 		}
-		
+
 	}
 
 }
